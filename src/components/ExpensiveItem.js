@@ -1,12 +1,15 @@
-import React from 'react'
+import React from 'react';
+
+// Apply css file for this component in this file
+import './ExpensiveItem.css';
 
 const ExpensiveItem = () => {
   return (
-    <div>
+    <div className='expense-item'>
       <div>30 March</div>
-      <div>
+      <div className='expense-item__description'>
         <h2>Protect your car</h2>
-        <div>$20 Mil</div>
+        <div className='expense-item__price'>$20 Mil</div>
       </div>
     </div>
   );
