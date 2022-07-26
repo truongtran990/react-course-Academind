@@ -1,10 +1,11 @@
 import React from 'react';
+import Card from '../UI/Card';
 import ExpenseItem from './ExpenseItem';
 import './ExpenseList.css';
 
 const ExpenseList = (props) => {
   return (
-    <div className='expenses'>
+    <Card Card className='expenses'>
       {
         props.expenses.map(expense => {
           return (
@@ -17,7 +18,7 @@ const ExpenseList = (props) => {
           );
         })        
       }
-    </div>
+    </Card>
   )
 }
 
