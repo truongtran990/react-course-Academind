@@ -21,8 +21,18 @@ const ExpenseForm = (props) => {
     setInputDate(event.target.value);
   };
 
+  const submitHandler = (event) => {
+    // prevent default behind the scense of the browser that is reload the web page.
+    event.preventDefault();
+    const dataInput = {
+      title: inputTitle,
+      amount: inputAmount,
+      date: new Date(inputDate)
+    }
+    console.log(dataInput);
+  };
   return (
-    <form>
+    <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
