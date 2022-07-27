@@ -27,11 +27,16 @@ function App() {
       title: 'Restore old parts',
       amount: 12143.1243,
     },
-  ]
+  ];
+
+  const addExpenseHandler = (expense) => {
+    console.log('In App.js');
+    console.log(expense);
+  };
   return (
     <div>
       <h1>Let's get started!</h1>
-      <NewExpense />
+      <NewExpense onAddNewExpense={addExpenseHandler}/>
       <ExpenseList expenses={expenses} />
     </div>
   );
