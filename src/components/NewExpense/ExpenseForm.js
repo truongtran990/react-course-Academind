@@ -30,17 +30,20 @@ const ExpenseForm = (props) => {
       date: new Date(inputDate)
     }
     console.log(dataInput);
+    setInputTitle('');
+    setInputAmount('');
+    setInputDate('');
   };
   return (
     <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
-          <input type="text" onChange={titleChangeHandler}/>
+          <input type="text" value={inputTitle} onChange={titleChangeHandler}/>
         </div>
         <div className="new-expense__control">
           <label>Amount</label>
-          <input type="number" min='0.01' step='0.01'onChange={amountChangeHandler}/>
+          <input type="number" min='0.01' step='0.01' value={inputAmount} onChange={amountChangeHandler}/>
         </div>
         <div className="new-expense__control">
           <label>Date</label>
