@@ -3,46 +3,48 @@ import {useState, useEffect} from 'react';
 import ExpenseList from "./components/Expenses/ExpenseList";
 import NewExpense from "./components/NewExpense/NewExpense";
 
+
+const INITIAL_EXPENSES = [
+  {
+    id: 1,
+    date: new Date(2022, 3, 22),
+    title: 'Protect your car',
+    amount: 14324,
+  },
+  {
+    id: 2,
+    date: new Date(2022, 3, 22),
+    title: 'Skin care',
+    amount: 1234.1234,
+  },
+  {
+    id: 3,
+    date: new Date(2022, 3, 22),
+    title: 'Clean car',
+    amount: 18734.1243,
+  },
+  {
+    id: 4,
+    date: new Date(2022, 3, 22),
+    title: 'Restore old parts',
+    amount: 12143.1243,
+  },
+];
+
 function App() {
-  const expenses = [
-    {
-      id: 1,
-      date: new Date(2022, 3, 22),
-      title: 'Protect your car',
-      amount: 14324,
-    },
-    {
-      id: 2,
-      date: new Date(2022, 3, 22),
-      title: 'Skin care',
-      amount: 1234.1234,
-    },
-    {
-      id: 3,
-      date: new Date(2022, 3, 22),
-      title: 'Clean car',
-      amount: 18734.1243,
-    },
-    {
-      id: 4,
-      date: new Date(2022, 3, 22),
-      title: 'Restore old parts',
-      amount: 12143.1243,
-    },
-  ];
+  const [expenses, setExpenses] = useState(INITIAL_EXPENSES);
 
   const [filterResult, setFilterResult] = useState([]);
 
   const addExpenseHandler = (expense) => {
-    console.log('In App.js');
-    console.log(expense);
+    setExpenses(previousState => [expense, ...previousState]);
   };
   const selectYearHandler = (value) => {
 
     const filtered = expenses.filter((expense) => {
       return expense.date.getFullYear() === value;
     });
-    setFilterResult(filtered);
+    // setFilterResult(filtered);
     
   };
 
@@ -56,7 +58,7 @@ function App() {
       <h1>Let's get started!</h1>
       <NewExpense onAddNewExpense={addExpenseHandler}/>
 
-      <ExpenseList expenses={filterResult} onChangeYear={selectYearHandler}/>
+      <ExpenseList expenses={expenses} onChangeYear={selectYearHandler}/>
     </div>
   );
 }
