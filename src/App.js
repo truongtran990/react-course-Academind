@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 
 import ExpenseList from "./components/Expenses/ExpenseList";
 import NewExpense from "./components/NewExpense/NewExpense";
@@ -44,21 +44,16 @@ function App() {
     const filtered = expenses.filter((expense) => {
       return expense.date.getFullYear() === value;
     });
-    // setFilterResult(filtered);
+    setFilterResult(filtered);
     
   };
-
-  useEffect(() => {
-
-    console.log('after filter', filterResult)
-  }, [filterResult])
   
   return (
     <div>
       <h1>Let's get started!</h1>
       <NewExpense onAddNewExpense={addExpenseHandler}/>
 
-      <ExpenseList expenses={expenses} onChangeYear={selectYearHandler}/>
+      <ExpenseList expenses={filterResult} onChangeYear={selectYearHandler}/>
     </div>
   );
 }
