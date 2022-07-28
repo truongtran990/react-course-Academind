@@ -1,6 +1,7 @@
 import {useState} from 'react';
 
 import ExpenseList from "./components/Expenses/ExpenseList";
+import AddNewExpense from './components/NewExpense/AddNewExpense';
 import NewExpense from "./components/NewExpense/NewExpense";
 
 
@@ -33,15 +34,20 @@ const INITIAL_EXPENSES = [
 
 function App() {
   const [expenses, setExpenses] = useState(INITIAL_EXPENSES);
+  const [isShowForm, setIsShowForm] = useState(false);
 
   const addExpenseHandler = (expense) => {
     setExpenses(previousState => [expense, ...previousState]);
   };
   
+  const clickHandler = (event) => {
+    setIsShowForm(!isShowForm)
+  };
   return (
     <div>
       <h1>Let's get started!</h1>
-      <NewExpense onAddNewExpense={addExpenseHandler}/>
+      
+      {isShowForm ? <NewExpense onAddNewExpense={addExpenseHandler}/> : <AddNewExpense onClickAddNew={clickHandler}/>}
 
       <ExpenseList expenses={expenses}/>
     </div>
