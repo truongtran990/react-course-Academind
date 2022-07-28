@@ -34,18 +34,8 @@ const INITIAL_EXPENSES = [
 function App() {
   const [expenses, setExpenses] = useState(INITIAL_EXPENSES);
 
-  const [filterResult, setFilterResult] = useState([]);
-
   const addExpenseHandler = (expense) => {
     setExpenses(previousState => [expense, ...previousState]);
-  };
-  const selectYearHandler = (value) => {
-
-    const filtered = expenses.filter((expense) => {
-      return expense.date.getFullYear() === value;
-    });
-    setFilterResult(filtered);
-    
   };
   
   return (
@@ -53,7 +43,7 @@ function App() {
       <h1>Let's get started!</h1>
       <NewExpense onAddNewExpense={addExpenseHandler}/>
 
-      <ExpenseList expenses={filterResult} onChangeYear={selectYearHandler}/>
+      <ExpenseList expenses={expenses}/>
     </div>
   );
 }

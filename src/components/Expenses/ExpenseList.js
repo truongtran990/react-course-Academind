@@ -9,15 +9,22 @@ const ExpenseList = (props) => {
   const [selectedYear, setSelectedYear] = useState('2022');
 
   const selectYearHandler = (value) => {
-    props.onChangeYear(value);
+    // props.onChangeYear(value);
     setSelectedYear(value);
   }
+
+  const filtedByYear = props.expenses.filter(expense => {
+    return expense.date.getFullYear() === selectedYear;
+  });
+  
+  console.log('in expenselist', filtedByYear);
+
   return (
     <div>
       <Card Card className='expenses'>
           <ExpensesFilter selectedYear={selectedYear} onChangeYear={selectYearHandler}/>
           {
-            props.expenses.map(expense => {
+            filtedByYear.map(expense => {
               return (
                 <ExpenseItem 
                   key={expense.id}
