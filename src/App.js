@@ -38,16 +38,22 @@ function App() {
 
   const addExpenseHandler = (expense) => {
     setExpenses(previousState => [expense, ...previousState]);
+    setIsShowForm(!isShowForm)
   };
   
   const clickHandler = (event) => {
     setIsShowForm(!isShowForm)
   };
+
+  const cancelHandler = () => {
+    console.log('cancel clicked');
+    setIsShowForm(!isShowForm)
+  }
   return (
     <div>
       <h1>Let's get started!</h1>
       
-      {isShowForm ? <NewExpense onAddNewExpense={addExpenseHandler}/> : <AddNewExpense onClickAddNew={clickHandler}/>}
+      {isShowForm ? <NewExpense onAddNewExpense={addExpenseHandler} onCancel={cancelHandler}/> : <AddNewExpense onClickAddNew={clickHandler}/>}
 
       <ExpenseList expenses={expenses}/>
     </div>

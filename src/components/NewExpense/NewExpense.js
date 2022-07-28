@@ -12,7 +12,7 @@ const NewExpense = (props) => {
   };
   return (
     <div className='new-expense'>
-      <ExpenseForm onAddNewExpense={addNewExpenseHandler}/>
+      <ExpenseForm onAddNewExpense={addNewExpenseHandler} onCancel={props.onCancel}/>
     </div>
   )
 }
