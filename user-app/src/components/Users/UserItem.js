@@ -1,11 +1,10 @@
-import React from 'react'
-import Card from '../UI/Card';
+import React from 'react';
 
 const UserItem = (props) => {
   return (
-    <Card>
+    <li>
       {props.username} ({props.age} years old)
-    </Card>
+    </li>
   )
 }
 
