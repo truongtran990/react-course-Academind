@@ -25,7 +25,7 @@ const UserForm = (props) => {
     console.log('age: ', event.target.value);
   }
 
-  const submitHandler = (event) => {
+  const addUserHandler = (event) => {
     event.preventDefault();
     const enteredUser = {
       username: enteredUsername,
@@ -52,7 +52,7 @@ const UserForm = (props) => {
 
   return (
     <>
-    <form onSubmit={submitHandler}>
+    <form onSubmit={addUserHandler}>
       <div>
         <label>Username</label>
         <input 
