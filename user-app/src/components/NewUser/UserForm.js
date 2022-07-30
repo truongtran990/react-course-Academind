@@ -55,14 +55,16 @@ const UserForm = (props) => {
   return (
     <Card className={classes.input}>
       <form onSubmit={addUserHandler}>
-        <label>Username</label>
+        <label htmlFor='username'>Username</label>
         <input 
-          type="text" 
+          id='username'
+          type="text"
           value={enteredUsername}
           onChange={changeUsernameHandler}
         />
-        <label>Age (Years)</label>
-        <input 
+        <label htmlFor='age'>Age (Years)</label>
+        <input
+          id='age'
           type="number" 
           min='0' 
           max='100' 
