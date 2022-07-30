@@ -34,7 +34,7 @@ const UserForm = (props) => {
       age: enteredAge
     };
     console.log('entereduser: ', enteredUser);
-    if (enteredUsername.trim().length > 0 && enteredAge.trim().length > 0) {
+    if (enteredUsername.trim().length > 0 && enteredAge.trim().length > 0 && +enteredAge > 0) {
       console.log('valid input user');
       props.onAddNewUser(enteredUser);
       setEnteredUsername('');
