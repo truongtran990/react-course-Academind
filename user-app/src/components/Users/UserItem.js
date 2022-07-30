@@ -4,9 +4,7 @@ import Card from '../UI/Card';
 const UserItem = (props) => {
   return (
     <Card>
-      <li>
-          {props.username} ({props.age} years old)
-      </li>
+      {props.username} ({props.age} years old)
     </Card>
   )
 }

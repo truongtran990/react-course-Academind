@@ -1,11 +1,12 @@
 import React from 'react'
 import Card from '../UI/Card';
 import UserItem from './UserItem';
+import classes from './UsersList.module.css';
 
 const UserList = (props) => {
   return (
-    <Card>
-      <div style={{'listStyleType': 'none'}}>
+    <Card className={classes.users}>
+      <ul>
         {
           props.users.map(user => {
             return (
@@ -17,9 +18,10 @@ const UserList = (props) => {
             )
           })
         }
-      </div>
+      </ul>
     </Card>
   )
 }
 
 export default UserList;
+
