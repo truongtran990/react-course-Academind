@@ -5,12 +5,10 @@ import Card from '../UI/Card';
 import classes from './InvalidUserInputModal.module.css';
 
 const InvalidUserInputModal = (props) => {
-  const clickHandler = (event) => {
-    props.onCancelHandler();
-  }
+
   return (
     <div>
-      <div className={classes.backdrop} />
+      <div className={classes.backdrop} onClick={props.onConfirm}/>
         <Card className={classes.modal}>
           <header className={classes.header}>
             <h2>
@@ -23,7 +21,7 @@ const InvalidUserInputModal = (props) => {
           <footer className={classes.actions}>
             <Button
               type='button'
-              onClick={clickHandler}
+              onClick={props.onConfirm}
             >
               Ok
             </Button>

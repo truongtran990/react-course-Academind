@@ -8,22 +8,15 @@ const UserForm = (props) => {
 
   const [enteredUsername, setEnteredUsername] = useState('');
   const [enteredAge, setEnteredAge] = useState('');
-  const [isInputUserValid, setIsInputUserValid] = useState(true);
-  const [isShowModal, setIsShowModal] = useState(false);
+  const [error, setError] = useState();
 
   const changeUsernameHandler = (event) => {
     setEnteredUsername(event.target.value);
-    if (event.target.value.trim().length > 0) {
-      setIsInputUserValid(true);
-    }
     console.log('username: ', event.target.value);
   };
 
   const changeAgeHandler = (event) => {
-    setEnteredAge(event.target.value);
-    if (event.target.value.trim().length > 0) {
-      setIsInputUserValid(true);
-    }    
+    setEnteredAge(event.target.value);  
     console.log('age: ', event.target.value);
   }
 
@@ -34,55 +27,71 @@ const UserForm = (props) => {
       age: enteredAge
     };
     console.log('entereduser: ', enteredUser);
-    if (enteredUsername.trim().length > 0 && enteredAge.trim().length > 0 && +enteredAge > 0) {
-      console.log('valid input user');
-      props.onAddNewUser(enteredUser);
-      setEnteredUsername('');
-      setEnteredAge('');
-    } else {
-      console.log('invalid input user!');
-      setIsInputUserValid(false);
-      setIsShowModal(true);
+    // if (enteredUsername.trim().length > 0 && enteredAge.trim().length > 0 && +enteredAge > 0) {
+    //   console.log('valid input user');
+    //   props.onAddNewUser(enteredUser);
+    //   setEnteredUsername('');
+    //   setEnteredAge('');
+    // } else {
+    //   console.log('invalid input user!');
+    //   setError(false);
+    //   setError(true);
+    //   return;
+    // }
+    if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
+      setError({
+        title: 'Invalid input',
+        message: 'Please enter a valid username and age (non-empty values)!'
+      })
       return;
     }
-
+    if (+enteredAge < 1) {
+      setError({
+        title: 'Invalid input',
+        message: 'Please enter a valid age (age > 0)!'
+      })
+      return;      
+    }
+    console.log('valid input user');
+    props.onAddNewUser(enteredUser);
+    setEnteredUsername('');
+    setEnteredAge('');
   }
 
-  const cancelModelHandler = () => {
-    setIsShowModal(false);
+  const confirmHandler = () => {
+    setError(null);
   }
 
   return (
-    <Card className={classes.input}>
-      <form onSubmit={addUserHandler}>
-        <label htmlFor='username'>Username</label>
-        <input 
-          id='username'
-          type="text"
-          value={enteredUsername}
-          onChange={changeUsernameHandler}
-        />
-        <label htmlFor='age'>Age (Years)</label>
-        <input
-          id='age'
-          type="number" 
-          min='0' 
-          max='100' 
-          step='1' 
-          value={enteredAge}
-          onChange={changeAgeHandler}
-        />
-        <Button type='submit'>Add User</Button>
-      </form>
+    <div>
+      <Card className={classes.input}>
+        <form onSubmit={addUserHandler}>
+          <label htmlFor='username'>Username</label>
+          <input 
+            id='username'
+            type="text"
+            value={enteredUsername}
+            onChange={changeUsernameHandler}
+          />
+          <label htmlFor='age'>Age (Years)</label>
+          <input
+            id='age'
+            type="number"
+            value={enteredAge}
+            onChange={changeAgeHandler}
+          />
+          <Button type='submit'>Add User</Button>
+        </form>
 
-      {isShowModal && 
-        <InvalidUserInputModal 
-          title="Invalid input"
-          message="Please enter a valid username and age (non-empty values)!"
-          onCancelHandler={cancelModelHandler}
-        >Ok</InvalidUserInputModal>
-      }
-    </Card>
+        {error && 
+          <InvalidUserInputModal 
+            title={error.title}
+            message={error.message}
+            onConfirm={confirmHandler}
+          ></InvalidUserInputModal>
+        }
+      </Card>
+    </div>
   )
 }
 
