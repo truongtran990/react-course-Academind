@@ -12,12 +12,10 @@ const UserForm = (props) => {
 
   const changeUsernameHandler = (event) => {
     setEnteredUsername(event.target.value);
-    console.log('username: ', event.target.value);
   };
 
   const changeAgeHandler = (event) => {
     setEnteredAge(event.target.value);  
-    console.log('age: ', event.target.value);
   }
 
   const addUserHandler = (event) => {
@@ -26,18 +24,6 @@ const UserForm = (props) => {
       username: enteredUsername,
       age: enteredAge
     };
-    console.log('entereduser: ', enteredUser);
-    // if (enteredUsername.trim().length > 0 && enteredAge.trim().length > 0 && +enteredAge > 0) {
-    //   console.log('valid input user');
-    //   props.onAddNewUser(enteredUser);
-    //   setEnteredUsername('');
-    //   setEnteredAge('');
-    // } else {
-    //   console.log('invalid input user!');
-    //   setError(false);
-    //   setError(true);
-    //   return;
-    // }
     if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
       setError({
         title: 'Invalid input',
@@ -52,7 +38,6 @@ const UserForm = (props) => {
       })
       return;      
     }
-    console.log('valid input user');
     props.onAddNewUser(enteredUser);
     setEnteredUsername('');
     setEnteredAge('');
@@ -65,6 +50,7 @@ const UserForm = (props) => {
   return (
     <div>
       <Card className={classes.input}>
+        <h2>New User Form</h2>
         <form onSubmit={addUserHandler}>
           <label htmlFor='username'>Username</label>
           <input 
