@@ -70,7 +70,7 @@ const UserForm = (props) => {
           value={enteredAge}
           onChange={changeAgeHandler}
         />
-        <Button>Add User</Button>
+        <Button type='submit'>Add User</Button>
       </form>
 
       {isShowModal && 
