@@ -1,10 +1,13 @@
 import React from 'react'
+import Card from '../UI/Card';
 
 const UserItem = (props) => {
   return (
-    <li style={{}}>
-        {props.username} ({props.age} years old)
-    </li>
+    <Card>
+      <li>
+          {props.username} ({props.age} years old)
+      </li>
+    </Card>
   )
 }
 

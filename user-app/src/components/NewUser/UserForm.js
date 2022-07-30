@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import InvalidUserInputModal from '../Notifications/InvalidUserInputModal';
 import Button from '../UI/Button';
+import classes from './UserForm.module.css';
+import Card from '../UI/Card';
 
 const UserForm = (props) => {
 
@@ -51,17 +53,14 @@ const UserForm = (props) => {
   }
 
   return (
-    <>
-    <form onSubmit={addUserHandler}>
-      <div>
+    <Card className={classes.input}>
+      <form onSubmit={addUserHandler}>
         <label>Username</label>
         <input 
           type="text" 
           value={enteredUsername}
           onChange={changeUsernameHandler}
         />
-      </div>
-      <div>
         <label>Age (Years)</label>
         <input 
           type="number" 
@@ -71,19 +70,17 @@ const UserForm = (props) => {
           value={enteredAge}
           onChange={changeAgeHandler}
         />
-      </div>
-      <Button>Add User</Button>
-    </form>
-    
-    {isShowModal && 
-      <InvalidUserInputModal 
-        title="Invalid input"
-        message="Please enter a valid username and age (non-empty values)!"
-        onCancelHandler={cancelModelHandler}
-      >Ok</InvalidUserInputModal>
-    }
-  </>      
+        <Button>Add User</Button>
+      </form>
 
+      {isShowModal && 
+        <InvalidUserInputModal 
+          title="Invalid input"
+          message="Please enter a valid username and age (non-empty values)!"
+          onCancelHandler={cancelModelHandler}
+        >Ok</InvalidUserInputModal>
+      }
+    </Card>
   )
 }
 
