@@ -15,12 +15,12 @@ function App() {
     });
   };
   return (
-    <div className="App">
+    <>
       <UserForm 
         onAddNewUser={addNewUserHandler}
       />
       {users.length > 0 && <UserList users={users}/>}
-    </div>
+    </>
   );
 }
 
