@@ -5,7 +5,6 @@ import classes from './UsersList.module.css';
 
 const UserList = (props) => {
   return (
-    <div>
     <Card className={classes.users}>
       <ul>
         {
@@ -21,7 +20,6 @@ const UserList = (props) => {
         }
       </ul>
     </Card>
-    </div>
   )
 }
 
