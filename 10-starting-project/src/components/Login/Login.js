@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -11,20 +11,19 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
+  useEffect(() => {
+    // call setFormIsValid every after the enteredEmail and enteredPassword change - Re-render UI
+    // why we need use the useEffect() -> you want to trigger the setFormIsValid in just only one place for each email and password fiels are change, Dont want to call setFormIsValid at many place: in emailHandler, passwordHandler. So that is the reason for this case
+    setFormIsValid(enteredPassword.trim().length > 6 && enteredEmail.includes('@'))
+  }, [enteredEmail, enteredPassword])
+  
+
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
-
-    setFormIsValid(
-      event.target.value.includes('@') && enteredPassword.trim().length > 6
-    );
   };
 
   const passwordChangeHandler = (event) => {
     setEnteredPassword(event.target.value);
-
-    setFormIsValid(
-      event.target.value.trim().length > 6 && enteredEmail.includes('@')
-    );
   };
 
   const validateEmailHandler = () => {
