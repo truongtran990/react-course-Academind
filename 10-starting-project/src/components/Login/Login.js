@@ -14,7 +14,19 @@ const Login = (props) => {
   useEffect(() => {
     // call setFormIsValid every after the enteredEmail and enteredPassword change - Re-render UI
     // why we need use the useEffect() -> you want to trigger the setFormIsValid in just only one place for each email and password fiels are change, Dont want to call setFormIsValid at many place: in emailHandler, passwordHandler. So that is the reason for this case
-    setFormIsValid(enteredPassword.trim().length > 6 && enteredEmail.includes('@'))
+    const idenfifier = setTimeout(() => {
+      // After 1s at the first time render component -> clog the checking the validity: 
+      console.log('Checking the validity: ', enteredEmail);
+      setFormIsValid(enteredPassword.trim().length > 6 && enteredEmail.includes('@'))
+    }, 1000);
+
+    // the last time react call clean up function is: before the last keystroke -> so the last key stroke -> we have the timer in setTimeout() function -> that is the reason why we have the log that is: Checking the validity:  anhanhturong when i typing: "anhanhturong" in the web ui.
+    // we have the last timer so -> after we fisnish the typing keystroke into the email or password input -> the console.log('checking the validity') will call continuously after 1 second. :).
+    // now I'm understanding so clearly
+    return () => {
+      console.log('CLEAN UP!: ', enteredEmail);
+      clearTimeout(idenfifier);
+    }
   }, [enteredEmail, enteredPassword])
   
 
