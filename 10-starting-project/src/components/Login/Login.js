@@ -11,7 +11,7 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
-  useEffect(() => {
+  /* useEffect(() => {
     // call setFormIsValid every after the enteredEmail and enteredPassword change - Re-render UI
     // why we need use the useEffect() -> you want to trigger the setFormIsValid in just only one place for each email and password fiels are change, Dont want to call setFormIsValid at many place: in emailHandler, passwordHandler. So that is the reason for this case
     const idenfifier = setTimeout(() => {
@@ -27,18 +27,30 @@ const Login = (props) => {
       console.log('CLEAN UP!: ', enteredEmail);
       clearTimeout(idenfifier);
     }
-  }, [enteredEmail, enteredPassword])
+  }, [enteredEmail, enteredPassword]) */
+  
+  useEffect(() => {
+    console.log('useEffect running!')
+  
+    return () => {
+      console.log('useEffect cleanup!')
+    }
+  }, []);
   
 
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
+    // some time the enteredPassword is not lastest -> the setFormIsValid is not working correctly
+    setFormIsValid(enteredPassword.trim().length > 6 && event.target.value.includes('@'))
   };
 
   const passwordChangeHandler = (event) => {
     setEnteredPassword(event.target.value);
+    setFormIsValid(event.target.value.trim().length > 6 && enteredEmail.includes('@'))
   };
 
   const validateEmailHandler = () => {
+    // sometimes when youcall the setEmailIsValid, the enteredEmail is not have the lasted values -> the code is not working correctly. In this case, you can use the arrow function instead to make sure to get the lasted valued from enteredEmail state (when update state was depends on the previous state -> use the callback function is the good way). But now, we have the useReducer of react will deal with this scenario with many benifit :)
     setEmailIsValid(enteredEmail.includes('@'));
   };
 
