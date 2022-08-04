@@ -112,7 +112,7 @@ const Login = (props) => {
           label="E-mail"
           id="email"
           type="email"
-          isValid={emailState.isValid}
+          isValid={emailIsValid}
           value={emailState.value}
           onChange={emailChangeHandler}
           onBlur={validateEmailHandler}
@@ -121,7 +121,7 @@ const Login = (props) => {
           label="Password"
           id="password"
           type="password"
-          isValid={passwordState.isValid}
+          isValid={passwordIsValid}
           value={passwordState.value}
           onChange={passwordChangeHandler}
           onBlur={validatePasswordHandler}
