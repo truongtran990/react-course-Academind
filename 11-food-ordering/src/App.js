@@ -1,14 +1,12 @@
-import './App.css';
-import Button from './components/UI/Button';
+import { Fragment } from 'react';
+
+import Header from './components/Header/Header';
 
 function App() {
   return (
-    <div>
-      Hello order app!
-      <Button>
-        Your cart
-      </Button>
-    </div>
+    <Fragment>
+      <Header />
+    </Fragment>
   );
 }
 
