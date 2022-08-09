@@ -12,7 +12,7 @@ const Header = (props) => {
     {/* Create header for app name and button */}
       <header className={classes.header}>
         <h1>ReactMeals</h1>
-        <HeaderCartButton />
+        <HeaderCartButton onClick={props.onShowCart} />
       </header>
       {/* Create another div for past and image as background of the app */}
       <div className={classes['main-image']}>

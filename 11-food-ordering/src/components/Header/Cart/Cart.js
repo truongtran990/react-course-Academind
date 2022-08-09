@@ -16,15 +16,22 @@ const Cart = (props) => {
   );
   
   return (
-    <Modal>
+    // click the backdrop of modal to close the cart modal
+    <Modal onClose={props.onClose}>
       {cartItems}
       <div>
         <span className={classes.total}>Total amount</span>
         <span>46.7</span>
       </div>
       <div className={classes.actions}>
-        <button className={classes['button--alt']}>Close</button>
-        <button className={classes.butotn}>Order</button>
+        {/* click the close button to close the cart modal */}
+        <button 
+          className={classes['button--alt']}
+          onClick={props.onClose}
+        >
+          Close
+        </button>
+        <button className={classes.button}>Order</button>
       </div>
     </Modal>
   )
