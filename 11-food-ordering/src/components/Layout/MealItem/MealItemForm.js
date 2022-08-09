@@ -5,14 +5,15 @@ import Input from '../../Input/Input';
 import classes from './MealItemForm.module.css';
 
 const MealItemForm = (props) => {
-  const amountInputRef = useRef();
   const [isAmountValid, setIsAmountValid] = useState(true);
+  const amountInputRef = useRef();
 
   const submitHandler = (event) => {
     event.preventDefault();
 
     const enteredAmount = amountInputRef.current.value;
-    const enteredAmountNumber = + enteredAmount;
+    console.log(enteredAmount);
+    const enteredAmountNumber = +enteredAmount;
 
     // check enteredAmount is valid or not
     if (

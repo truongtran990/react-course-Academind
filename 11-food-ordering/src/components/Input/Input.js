@@ -9,7 +9,7 @@ const Input = React.forwardRef((props, ref) => {
       {/* get all the object input pass from the parent component: why we use the ... operator -> because the input in the parent component was pass to the children is the object dict in js -> so we using this operator to get all the value of it instead of write explicity. */}
       <input ref={ref} {...props.input} />
     </div>
-  )
+  );
 });
 
 export default Input;
