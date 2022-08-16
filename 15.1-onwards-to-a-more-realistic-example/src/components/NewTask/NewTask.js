@@ -6,13 +6,15 @@ import TaskForm from './TaskForm';
 const NewTask = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const baseUrl = 'https://react-http-a4e82-default-rtdb.asia-southeast1.firebasedatabase.app/';
 
   const enterTaskHandler = async (taskText) => {
     setIsLoading(true);
     setError(null);
     try {
       const response = await fetch(
-        'https://react-http-6b4a6.firebaseio.com/tasks.json',
+        // 'https://react-http-6b4a6.firebaseio.com/tasks.json',
+        `${baseUrl}tasks.json`,
         {
           method: 'POST',
           body: JSON.stringify({ text: taskText }),

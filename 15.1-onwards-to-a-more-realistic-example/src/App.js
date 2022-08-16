@@ -7,15 +7,14 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [tasks, setTasks] = useState([]);
-  const baseUrl = 'https://react-http-a4e82-default-rtdb.asia-southeast1.firebasedatabase.app/'
+  const baseUrl = 'https://react-http-a4e82-default-rtdb.asia-southeast1.firebasedatabase.app/';
 
   const fetchTasks = async (taskText) => {
     setIsLoading(true);
     setError(null);
     try {
       const response = await fetch(
-        // `${baseUrl}tasks.json`
-        'https://react-http-a4e82-default-rtdb.asia-southeast1.firebasedatabase.app/tasks.json'
+        `${baseUrl}tasks.json`
       );
 
       if (!response.ok) {
