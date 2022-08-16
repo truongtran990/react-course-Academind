@@ -1,19 +1,22 @@
 import { useState, useEffect } from 'react';
 
-import Card from '../components/Card';
 
-const useCounter = () => {
+const useCounter = (forward=true) => {
   const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCounter((previousCounter => previousCounter + 1));
+      if (forward) {
+        setCounter((previousCounter => previousCounter + 1));
+      } else {
+        setCounter((previousCounter => previousCounter - 1));
+      }
     }, 1000);
   
     return () => {
       clearInterval(interval);
     }
-  }, []);
+  }, [forward]);
 
   return counter;
 };
