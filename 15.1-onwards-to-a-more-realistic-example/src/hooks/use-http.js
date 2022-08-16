@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 
 const useHttp = (requestConfigs, handleResponse) => {
@@ -14,9 +14,9 @@ const useHttp = (requestConfigs, handleResponse) => {
     try {
       const response = await fetch(
         requestConfigs.url, {
-          method: requestConfigs.method,
-          headers: requestConfigs.headers,
-          body: JSON.stringify(requestConfigs.body),
+          method: requestConfigs ? requestConfigs.method : 'GET',
+          headers: requestConfigs ? requestConfigs.headers: {},
+          body: requestConfigs ? JSON.stringify(requestConfigs.body) : null,
         }
       );
 

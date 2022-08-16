@@ -2,39 +2,27 @@ import React, { useEffect, useState } from 'react';
 
 import Tasks from './components/Tasks/Tasks';
 import NewTask from './components/NewTask/NewTask';
+import useHttp from './hooks/use-http';
 
 function App() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [tasks, setTasks] = useState([]);
   const baseUrl = 'https://react-http-a4e82-default-rtdb.asia-southeast1.firebasedatabase.app/';
 
-  const fetchTasks = async (taskText) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(
-        `${baseUrl}tasks.json`
-      );
+  const handleFetchData = taskDatas => {
 
-      if (!response.ok) {
-        throw new Error('Request failed!');
-      }
+    const loadedTasks = [];
 
-      const data = await response.json();
-
-      const loadedTasks = [];
-
-      for (const taskKey in data) {
-        loadedTasks.push({ id: taskKey, text: data[taskKey].text });
-      }
-
-      setTasks(loadedTasks);
-    } catch (err) {
-      setError(err.message || 'Something went wrong!');
+    for (const taskKey in taskDatas) {
+      loadedTasks.push({ id: taskKey, text: taskDatas[taskKey].text });
     }
-    setIsLoading(false);
+    setTasks(loadedTasks);    
   };
+
+  const {isLoading, error, sendRequest: fetchTasks} = useHttp({
+    url: `${baseUrl}tasks.json`,
+  }, handleFetchData);
+
+
 
   useEffect(() => {
     fetchTasks();
