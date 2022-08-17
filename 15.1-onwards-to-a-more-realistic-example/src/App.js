@@ -8,25 +8,22 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const baseUrl = 'https://react-http-a4e82-default-rtdb.asia-southeast1.firebasedatabase.app/';
 
-  const handleFetchData = taskDatas => {
-
-    const loadedTasks = [];
-
-    for (const taskKey in taskDatas) {
-      loadedTasks.push({ id: taskKey, text: taskDatas[taskKey].text });
-    }
-    setTasks(loadedTasks);    
-  };
-
-  const {isLoading, error, sendRequest: fetchTasks} = useHttp({
-    url: `${baseUrl}tasks.json`,
-  }, handleFetchData);
-
-
+  const {isLoading, error, sendRequest: fetchTasks} = useHttp();
 
   useEffect(() => {
-    fetchTasks();
-  }, []);
+    const handleFetchData = taskDatas => {
+
+      const loadedTasks = [];
+  
+      for (const taskKey in taskDatas) {
+        loadedTasks.push({ id: taskKey, text: taskDatas[taskKey].text });
+      }
+      setTasks(loadedTasks);    
+    };    
+    fetchTasks({
+      url: `${baseUrl}tasks.json`,
+    }, handleFetchData);
+  }, [fetchTasks]);
 
   const taskAddHandler = (task) => {
     setTasks((prevTasks) => prevTasks.concat(task));
