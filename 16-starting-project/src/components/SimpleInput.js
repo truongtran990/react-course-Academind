@@ -1,9 +1,51 @@
+import { useState } from 'react';
+
+import '../index.css';
+
+
 const SimpleInput = (props) => {
+  const [enteredName, setEnteredName] = useState('');
+  const [touchedNameInput, setTouchedNameInput] = useState(false);
+  
+  const enteredNameIsValid = enteredName.trim() !== '';
+  const nameInputIsInvalid = !enteredNameIsValid && touchedNameInput;
+  
+  const changeNameHandler = (event) => {
+    setEnteredName(event.target.value);
+    console.log('enteredName: ', event.target.value)
+  };
+  const blurNameHandler = (event) => {
+    console.log('on blur')
+    setTouchedNameInput(true);
+  };
+
+  const formSubmitHandler = (event) => {
+    event.preventDefault();
+    setTouchedNameInput(true);
+    // Check if the input value is valid or not
+    if (!enteredNameIsValid) {
+      return;
+    }
+    console.log(enteredName);
+    setEnteredName('');
+    setTouchedNameInput(false);
+  };
+
+  const nameInputClasses = nameInputIsInvalid ? 'form-control invalid' : 'form-control';
   return (
-    <form>
-      <div className='form-control'>
+    <form onSubmit={formSubmitHandler}>
+      <div className={nameInputClasses}>
         <label htmlFor='name'>Your Name</label>
-        <input type='text' id='name' />
+        <input 
+          id='name' 
+          type='text'
+          value={enteredName} 
+          onChange={changeNameHandler}
+          onBlur={blurNameHandler}
+        />
+        {
+          nameInputIsInvalid && <p className='error-text'>Name must not be empty!</p>
+        }
       </div>
       <div className="form-actions">
         <button>Submit</button>
