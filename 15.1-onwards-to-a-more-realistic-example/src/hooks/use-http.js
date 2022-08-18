@@ -7,7 +7,7 @@ const useHttp = () => {
   const [error, setError] = useState(null);
 
   // not for specific url for task endpoint -> for any endpoint -> so we can pass the url as parameter into custom hook.
-
+  
   const sendRequest = useCallback(async (requestConfigs, handleResponse) => {
     setIsLoading(true);
     setError(null);
