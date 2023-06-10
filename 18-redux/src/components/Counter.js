@@ -8,8 +8,14 @@ const Counter = () => {
   // use this to extract data you want to get from our store. Redux will setup subscription for this component
   // from my understand, I think useSelector do the same way with useState.
   const counter = useSelector((state) => state.counter);
+  const showCounter = useSelector((state) => state.showCounter);
 
-  const toggleCounterHandler = () => {};
+  const toggleCounterHandler = () => {
+    dispatch &&
+      dispatch({
+        type: "toggle_counter",
+      });
+  };
 
   const incrementHandler = () => {
     dispatch &&
@@ -17,7 +23,7 @@ const Counter = () => {
         type: "increment",
       });
   };
-  const increaseHandler = (count = 5) => {
+  const increaseHandler = () => {
     dispatch &&
       dispatch({
         type: "increase",
@@ -34,7 +40,7 @@ const Counter = () => {
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-      <div className={classes.value}>{counter}</div>
+      {showCounter && <div className={classes.value}>{counter}</div>}
       <div>
         <button onClick={incrementHandler}>Increment</button>
         <button onClick={increaseHandler}>Increase 5</button>
