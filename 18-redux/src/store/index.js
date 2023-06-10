@@ -22,6 +22,7 @@ const counterReducer = (state = { counter: 0 }, action) => {
 };
 
 // create our redux store to manage state of react component,
-const store = createStore();
+const store = createStore(counterReducer);
 
 export { counterReducer };
+export default store;
