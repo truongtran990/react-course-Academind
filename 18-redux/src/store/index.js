@@ -7,10 +7,15 @@ import { createStore } from "redux";
  * @returns new udpated state
  */
 const counterReducer = (state = { counter: 0 }, action) => {
+  console.log(action);
   switch (action.type) {
     case "increment":
       return {
         counter: state.counter + 1,
+      };
+    case "increase":
+      return {
+        counter: state.counter + action.amount,
       };
     case "decrement":
       return {
