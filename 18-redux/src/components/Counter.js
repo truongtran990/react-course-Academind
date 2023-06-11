@@ -1,40 +1,27 @@
 import { useSelector, useDispatch } from "react-redux";
 
 import classes from "./Counter.module.css";
-import { Component } from "react";
+import { counterActions } from "../store/index.js";
 
 const Counter = () => {
   const dispatch = useDispatch();
   // use this to extract data you want to get from our store. Redux will setup subscription for this component
   // from my understand, I think useSelector do the same way with useState.
-  const counter = useSelector((state) => state.counter);
-  const showCounter = useSelector((state) => state.showCounter);
+  const counter = useSelector((state) => state.counter.counter);
+  const showCounter = useSelector((state) => state.counter.showCounter);
 
   const toggleCounterHandler = () => {
-    dispatch &&
-      dispatch({
-        type: "toggle_counter",
-      });
+    dispatch && dispatch(counterActions.toggleCounter());
   };
 
   const incrementHandler = () => {
-    dispatch &&
-      dispatch({
-        type: "increment",
-      });
+    dispatch && dispatch(counterActions.increment());
   };
   const increaseHandler = () => {
-    dispatch &&
-      dispatch({
-        type: "increase",
-        amount: 5,
-      });
+    dispatch && dispatch(counterActions.increase(10));
   };
   const decrementHandler = () => {
-    dispatch &&
-      dispatch({
-        type: "decrement",
-      });
+    dispatch && dispatch(counterActions.decrement());
   };
 
   return (
@@ -52,41 +39,3 @@ const Counter = () => {
 };
 
 export default Counter;
-
-// class CounterV2 extends Component {
-//   incrementHandler() {
-//     this.props.increment();
-//   }
-//   decrementHandler() {
-//     this.props.decrement();
-//   }
-//   toggleCounterHandler() {}
-
-//   render() {
-//     return (
-//       <main className={classes.counter}>
-//         <h1>Redux Counter</h1>
-//         <div className={classes.value}>{this.props.counter}</div>
-//         <div>
-//           <button onClick={this.incrementHandler.bind(this)}>Increment</button>
-//           <button onClick={this.decrementHandler.bind(this)}>Decrement</button>
-//         </div>
-//         <button onClick={this.toggleCounterHandler}>Toggle Counter</button>
-//       </main>
-//     );
-//   }
-// }
-
-// const mapStateToProps = (state) => {
-//   return {
-//     counter: state.counter,
-//   };
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     increment: () => dispatch({ type: "increment" }),
-//     decrement: () => dispatch({ type: "decrement" }),
-//   };
-// };
-// export default connect(mapStateToProps, mapDispatchToProps)(CounterV2);
