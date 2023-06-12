@@ -11,7 +11,7 @@ function App() {
 
   return (
     <Layout>
-      {cart.isShowCart && <Cart />}
+      {cart.isShowCart && <Cart items={cart.items} />}
       <Products />
     </Layout>
   );

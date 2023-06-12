@@ -2,7 +2,15 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const initialCartState = {
   totalQuantity: 0,
-  items: [{ title: "Test Item", quantity: 3, total: 18, price: 6 }],
+  items: [
+    {
+      title: "Test Item",
+      quantity: 3,
+      total: 18,
+      price: 6,
+      description: "This is a first product - amazing!",
+    },
+  ],
   totalPrice: 0,
   isShowCart: true,
 };
