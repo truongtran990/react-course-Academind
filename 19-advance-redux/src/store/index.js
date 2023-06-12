@@ -26,17 +26,46 @@ const cartSlice = createSlice({
       const itemIndex = state.items.findIndex(
         (item) => item.title === action.payload.title
       );
-      const totalQuantity =
-        itemIndex > -1 ? state.items[itemIndex].quantity + 1 : 1;
-      const newItem = {
+
+      if (itemIndex < 0) {
+        state.items.push({
+          ...action.payload,
+          quantity: 1,
+          total: action.payload.price,
+        });
+        return;
+      }
+      const newQuantity = state.items[itemIndex].quantity + 1;
+
+      state.items[itemIndex] = {
         ...action.payload,
-        quantity: totalQuantity,
-        total: action.payload.price,
+        quantity: newQuantity,
+        total: action.payload.price * newQuantity,
       };
-      state.items.push(newItem);
     },
-    increaseQuantity() {},
-    decreaseQuantity() {},
+    increaseQuantity(state, action) {
+      const itemIndex = state.items.findIndex(
+        (item) => item.title === action.payload.title
+      );
+      if (itemIndex > -1) {
+        state.items[itemIndex].quantity += 1;
+        state.items[itemIndex].total =
+          state.items[itemIndex].quantity * state.items[itemIndex].price;
+      }
+    },
+    decreaseQuantity(state, action) {
+      if (action.payload.quantity === 1) {
+        return;
+      }
+      const itemIndex = state.items.findIndex(
+        (item) => item.title === action.payload.title
+      );
+      if (itemIndex > -1) {
+        state.items[itemIndex].quantity -= 1;
+        state.items[itemIndex].total =
+          state.items[itemIndex].quantity * state.items[itemIndex].price;
+      }
+    },
   },
 });
 
