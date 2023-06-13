@@ -2,15 +2,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const initialCartState = {
   totalQuantity: 0,
-  items: [
-    {
-      title: "Test Item",
-      quantity: 3,
-      total: 18,
-      price: 6,
-      description: "This is a first product - amazing!",
-    },
-  ],
+  items: [],
   totalPrice: 0,
   isShowCart: true,
 };
@@ -26,6 +18,8 @@ const cartSlice = createSlice({
       const itemIndex = state.items.findIndex(
         (item) => item.title === action.payload.title
       );
+
+      state.totalQuantity += 1;
 
       if (itemIndex < 0) {
         state.items.push({
@@ -47,6 +41,7 @@ const cartSlice = createSlice({
       const itemIndex = state.items.findIndex(
         (item) => item.title === action.payload.title
       );
+      state.totalQuantity += 1;
       if (itemIndex > -1) {
         state.items[itemIndex].quantity += 1;
         state.items[itemIndex].total =
@@ -57,7 +52,7 @@ const cartSlice = createSlice({
       const existItem = state.items.find(
         (item) => action.payload.title === item.title
       );
-
+      state.totalQuantity -= 1;
       if (existItem.quantity === 1) {
         state.items = state.items.filter(
           (item) => item.title !== existItem.title
