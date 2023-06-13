@@ -3,11 +3,13 @@ import classes from "./Products.module.css";
 
 const DUMMY_PRODUCTS = [
   {
+    id: "p1",
     title: "Test Item",
     price: 6,
     description: "This is a first product - amazing!",
   },
   {
+    id: "p2",
     title: "Mackbook",
     price: 1999,
     description: "Amazing portable computer",
@@ -22,7 +24,8 @@ const Products = (props) => {
         {DUMMY_PRODUCTS.map((product) => {
           return (
             <ProductItem
-              key={product.title}
+              key={product.id}
+              id={product.id}
               title={product.title}
               price={product.price}
               description={product.description}

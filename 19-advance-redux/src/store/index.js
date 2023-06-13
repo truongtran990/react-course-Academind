@@ -16,7 +16,7 @@ const cartSlice = createSlice({
     },
     addToCart(state, action) {
       const itemIndex = state.items.findIndex(
-        (item) => item.title === action.payload.title
+        (item) => item.id === action.payload.id
       );
 
       state.totalQuantity += 1;
@@ -38,25 +38,20 @@ const cartSlice = createSlice({
       };
     },
     increaseQuantity(state, action) {
-      const itemIndex = state.items.findIndex(
-        (item) => item.title === action.payload.title
+      const existItem = state.items.find(
+        (item) => action.payload.id === item.id
       );
       state.totalQuantity += 1;
-      if (itemIndex > -1) {
-        state.items[itemIndex].quantity += 1;
-        state.items[itemIndex].total =
-          state.items[itemIndex].quantity * state.items[itemIndex].price;
-      }
+      existItem.total += existItem.price;
+      existItem.quantity += 1;
     },
     decreaseQuantity(state, action) {
       const existItem = state.items.find(
-        (item) => action.payload.title === item.title
+        (item) => action.payload.id === item.id
       );
       state.totalQuantity -= 1;
       if (existItem.quantity === 1) {
-        state.items = state.items.filter(
-          (item) => item.title !== existItem.title
-        );
+        state.items = state.items.filter((item) => item.id !== existItem.id);
       } else {
         existItem.quantity -= 1;
         existItem.total -= existItem.price;

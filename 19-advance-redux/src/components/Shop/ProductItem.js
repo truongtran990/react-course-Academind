@@ -7,7 +7,7 @@ import { cartActions } from "../../store/index.js";
 
 const ProductItem = (props) => {
   const dispatch = useDispatch();
-  const { title, price, description } = props;
+  const { id, title, price, description } = props;
 
   const handleAddToCart = (item) => {
     dispatch(cartActions.addToCart(item));
@@ -27,6 +27,7 @@ const ProductItem = (props) => {
                 title,
                 price,
                 description,
+                id,
               };
               handleAddToCart(item);
             }}

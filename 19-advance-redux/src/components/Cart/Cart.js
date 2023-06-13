@@ -10,8 +10,9 @@ const Cart = ({ items }) => {
         {items.map((item) => {
           return (
             <CartItem
-              key={item.title}
+              key={item.id}
               item={{
+                id: item.id,
                 title: item.title,
                 quantity: item.quantity,
                 total: item.quantity * item.price,
