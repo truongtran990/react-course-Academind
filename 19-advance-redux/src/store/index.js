@@ -14,7 +14,11 @@ const cartSlice = createSlice({
     toggleCart(state) {
       state.isShowCart = !state.isShowCart;
     },
-    addToCart(state, action) {
+    replaceCart(state, action) {
+      state.totalQuantity = action.payload.totalQuantity;
+      state.items = action.payload.items;
+    },
+    addItemToCart(state, action) {
       const itemIndex = state.items.findIndex(
         (item) => item.id === action.payload.id
       );
