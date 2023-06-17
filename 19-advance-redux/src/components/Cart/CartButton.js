@@ -5,7 +5,7 @@ import { cartActions } from "../../store/index.js";
 import classes from "./CartButton.module.css";
 
 const CartButton = (props) => {
-  const totalQuantity = useSelector((state) => state.cart.totalQuantity);
+  const totalQuantity = useSelector((state) => state.cart.cart.totalQuantity);
   const dispatch = useDispatch();
 
   const handleToggleCart = () => {
