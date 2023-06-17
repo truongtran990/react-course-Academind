@@ -1,69 +1,82 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const initialCartState = {
-  totalQuantity: 0,
-  items: [
-    {
-      title: "Test Item",
-      quantity: 3,
-      total: 18,
-      price: 6,
-      description: "This is a first product - amazing!",
-    },
-  ],
-  totalPrice: 0,
-  isShowCart: true,
+  cart: {
+    totalQuantity: 0,
+    items: [],
+    totalPrice: 0,
+    isChanged: false,
+  },
+  ui: {
+    isShowCart: true,
+    notification: null,
+  },
 };
 
 const cartSlice = createSlice({
   name: "cart",
   initialState: initialCartState,
   reducers: {
-    toggleCart(state) {
-      state.isShowCart = !state.isShowCart;
+    showNotification(state, action) {
+      state.ui.notification = {
+        status: action.payload.status, // pending, success, failed
+        title: action.payload.title,
+        message: action.payload.message,
+      };
     },
-    addToCart(state, action) {
-      const itemIndex = state.items.findIndex(
-        (item) => item.title === action.payload.title
+    toggleCart(state) {
+      state.ui.isShowCart = !state.ui.isShowCart;
+    },
+    replaceCart(state, action) {
+      state.cart.totalQuantity = action.payload.totalQuantity;
+      state.cart.items = action.payload.items || [];
+    },
+    addItemToCart(state, action) {
+      const itemIndex = state.cart.items.findIndex(
+        (item) => item.id === action.payload.id
       );
 
+      state.cart.totalQuantity += 1;
+      state.cart.isChanged = true;
+
       if (itemIndex < 0) {
-        state.items.push({
+        state.cart.items.push({
           ...action.payload,
           quantity: 1,
           total: action.payload.price,
         });
         return;
       }
-      const newQuantity = state.items[itemIndex].quantity + 1;
+      const newQuantity = state.cart.items[itemIndex].quantity + 1;
 
-      state.items[itemIndex] = {
+      state.cart.items[itemIndex] = {
         ...action.payload,
         quantity: newQuantity,
         total: action.payload.price * newQuantity,
       };
     },
     increaseQuantity(state, action) {
-      const itemIndex = state.items.findIndex(
-        (item) => item.title === action.payload.title
+      const existItem = state.cart.items.find(
+        (item) => action.payload.id === item.id
       );
-      if (itemIndex > -1) {
-        state.items[itemIndex].quantity += 1;
-        state.items[itemIndex].total =
-          state.items[itemIndex].quantity * state.items[itemIndex].price;
-      }
+      state.cart.totalQuantity += 1;
+      state.cart.isChanged = true;
+      existItem.total += existItem.price;
+      existItem.quantity += 1;
     },
     decreaseQuantity(state, action) {
-      if (action.payload.quantity === 1) {
-        return;
-      }
-      const itemIndex = state.items.findIndex(
-        (item) => item.title === action.payload.title
+      const existItem = state.cart.items.find(
+        (item) => action.payload.id === item.id
       );
-      if (itemIndex > -1) {
-        state.items[itemIndex].quantity -= 1;
-        state.items[itemIndex].total =
-          state.items[itemIndex].quantity * state.items[itemIndex].price;
+      state.cart.totalQuantity -= 1;
+      state.cart.isChanged = true;
+      if (existItem.quantity === 1) {
+        state.cart.items = state.cart.items.filter(
+          (item) => item.id !== existItem.id
+        );
+      } else {
+        existItem.quantity -= 1;
+        existItem.total -= existItem.price;
       }
     },
   },
