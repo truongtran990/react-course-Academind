@@ -1,13 +1,11 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
-const FIREBASE_URL =
-  "https://react-http-a4e82-default-rtdb.asia-southeast1.firebasedatabase.app/";
-
 const initialCartState = {
   cart: {
     totalQuantity: 0,
     items: [],
     totalPrice: 0,
+    isChanged: false,
   },
   ui: {
     isShowCart: true,
@@ -31,7 +29,7 @@ const cartSlice = createSlice({
     },
     replaceCart(state, action) {
       state.cart.totalQuantity = action.payload.totalQuantity;
-      state.cart.items = action.payload.items;
+      state.cart.items = action.payload.items || [];
     },
     addItemToCart(state, action) {
       const itemIndex = state.cart.items.findIndex(
@@ -39,6 +37,7 @@ const cartSlice = createSlice({
       );
 
       state.cart.totalQuantity += 1;
+      state.cart.isChanged = true;
 
       if (itemIndex < 0) {
         state.cart.items.push({
@@ -61,6 +60,7 @@ const cartSlice = createSlice({
         (item) => action.payload.id === item.id
       );
       state.cart.totalQuantity += 1;
+      state.cart.isChanged = true;
       existItem.total += existItem.price;
       existItem.quantity += 1;
     },
@@ -69,6 +69,7 @@ const cartSlice = createSlice({
         (item) => action.payload.id === item.id
       );
       state.cart.totalQuantity -= 1;
+      state.cart.isChanged = true;
       if (existItem.quantity === 1) {
         state.cart.items = state.cart.items.filter(
           (item) => item.id !== existItem.id
@@ -80,48 +81,6 @@ const cartSlice = createSlice({
     },
   },
 });
-
-export const sendCartData = (cart) => {
-  return async (dispatch) => {
-    dispatch(
-      cartActions.showNotification({
-        status: "pending",
-        title: "Sending...",
-        message: "Sending cart data to firebase...",
-      })
-    );
-
-    const sendRequest = async () => {
-      const response = await fetch(`${FIREBASE_URL}carts.json`, {
-        method: "PUT",
-        body: JSON.stringify(cart),
-      });
-
-      if (!response.ok) {
-        throw new Error("Sending cart data failed");
-      }
-    };
-
-    try {
-      await sendRequest();
-      dispatch(
-        cartActions.showNotification({
-          status: "success",
-          title: "Success!",
-          message: "Sent cart data successfully!",
-        })
-      );
-    } catch (error) {
-      dispatch(
-        cartActions.showNotification({
-          status: "error",
-          title: "Error",
-          message: "Sending cart data failed!",
-        })
-      );
-    }
-  };
-};
 
 export const cartActions = cartSlice.actions;
 

@@ -5,7 +5,7 @@ import Cart from "./components/Cart/Cart";
 import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
 import Notification from "./components/UI/Notification.js";
-import { sendCartData } from "./store/index.js";
+import { sendCartData, fetchCartData } from "./store/cart.actions.js";
 
 let isInitialApp = true;
 
@@ -14,6 +14,10 @@ function App() {
   const ui = useSelector((state) => state.cart.ui);
   const notification = useSelector((state) => state.cart.ui.notification);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCartData());
+  }, [dispatch]);
 
   // We use useEffect to update data to the firebase whenever the cart data state is changed
   /* 
@@ -26,7 +30,7 @@ function App() {
       return;
     }
 
-    dispatch(sendCartData(cart));
+    if (cart.isChanged) dispatch(sendCartData(cart));
   }, [cart, dispatch]);
 
   return (
